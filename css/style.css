@@ -1,0 +1,104 @@
+.verh{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    padding-left: 8px;
+    height: 100px;
+    background-color: #151d25;
+}
+.logo{
+    width: 30px;
+    height: 30px;
+}
+.steam{
+position: fixed;
+left: 40px;
+top: 8px;
+text-decoration: none;
+color: darkgrey;
+font-family: "Roboto", serif;
+font-optical-sizing: auto;
+font-size: 14px;
+margin-left: 20px;
+}
+.vid{
+    position: fixed;
+    left: 100px;
+    top: 8px;
+    text-decoration: none;
+    color: darkgrey;
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-size: 14px;
+    margin-left: 20px;
+    }
+.frends{
+    position: fixed;
+    left: 140px;
+    top: 8px;
+    text-decoration: none;
+    color: darkgrey;
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-size: 14px;
+    margin-left: 20px;
+}
+.gayme{
+    position: fixed;
+    left: 200px;
+    top: 8px;
+    text-decoration: none;
+    color: darkgrey;
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-size: 14px;
+    margin-left: 20px;
+}
+.who{
+    position: fixed;
+    left: 250px;
+    top: 8px;
+    text-decoration: none;
+    color: darkgrey;
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-size: 14px;
+    margin-left: 20px;
+}
+.porno{
+    width: 80px;
+    height: 30px;
+    position: fixed;
+    left: 1300px;
+    top: 8px;
+}
+.front{
+    width: 220px;
+    height: 40px;
+    position: fixed;
+    left: 1380px;
+    top: 8px;
+}
+.shop{
+    text-decoration: none;
+    color: rgb(233, 231, 231);
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-size: 20px;
+    margin-left: 20px;
+    margin-left: 10px;
+}
+.mini{
+ width: auto;
+ height: auto;
+margin-top: 30px;
+margin-left: 280px;
+}
+.soon{
+    font-size: 13px;
+    color: darkgray;
+    margin-top: 10px;
+    margin-left: 280px;
+
+}
