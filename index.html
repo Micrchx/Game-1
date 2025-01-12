@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Kadirow store</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            display: block;
+        }
+        #score {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 20px;
+            color: rgb(255, 255, 255);
+        }
+        #controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .mobile-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+        .mobile-button {
+            width: 60px;
+            height: 60px;
+            background-color: lightgray;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            text-align: center;
+            line-height: 60px;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+<header class="verh">
+    <img class="logo" src="/img/Без названия1_20250109193741.png" alt="logo">
+    <a class="steam" href="">kadirov</a>
+    <a class="vid" href="">вид</a>
+    <a class="frends" href="">друзья</a>
+    <a class="gayme" href="">игры</a>
+    <a class="who" href="">справки</a>
+    <img class="porno" src="/img/Без названия2_20250109202401.png" alt="porno">
+    <img class="front" src="/img/Без названия3_20250109205508.png" alt="front">
+    <br>
+    <img  src="/img/Снимок экрана 2025-01-09 213900.png" alt="strelki">
+    <a class="shop" href="">Магазин</a> 
+    <a class="shop" href="">Библиотека</a>
+    <a class="shop" href="">Сообшество</a>
+    <a class="shop" href="">Россия</a>
+    <br>
+    <img src="/img/Снимок экрана 2025-01-09 214526.png" alt="gay">
+    <a class="shop" href="">Если кадырова нету то нажми вперед и он зайдев в загон</a>
+</header>
+
+<div class="base">
+<div class="minimeny">
+<img class="mini" src="/img/Снимок экрана 2025-01-09 220756.png" alt="minimeny">
+</div>
+</div>
+</div>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin-bottom: 100px;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            display: block;
+        }
+        #score {
+            position: absolute;
+            top: 100px;
+            left: 10px;
+            font-size: 40px;
+            color: rgb(122, 16, 16);
+        }
+        #controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .mobile-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+        .mobile-button {
+            width: 60px;
+            height: 60px;
+            background-color: lightgray;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            text-align: center;
+            line-height: 60px;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="score">Рекорд всей жизни: 0</div>
+    <div id="controls">
+        <input type="color" id="bgColor" value="#1488">
+    </div>
+    <div class="mobile-controls">
+        <button class="mobile-button" id="left">⬅️</button>
+        <button class="mobile-button" id="up">⬆️</button>
+        <button class="mobile-button" id="down">⬇️</button>
+        <button class="mobile-button" id="right">➡️</button>
+    </div>
+    <canvas id="gameCanvas"></canvas>
+
+    <script>
+        // Set up the canvas
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Load textures programmatically
+        let playerImg = new Image();
+        playerImg.src = '/img/hero.png'; // Path to player texture
+
+        let sheepImg = new Image();
+        sheepImg.src = '/img/sheap.png'; // Path to sheep texture
+
+        let backgroundImg = new Image();
+        backgroundImg.src = '/img/bacr.jpg'; // Path to background texture
+
+        // Background color control
+        document.getElementById("bgColor").addEventListener("input", (e) => {
+            canvas.style.backgroundColor = e.target.value;
+        });
+
+        // Game objects
+        const player = {
+            x: canvas.width / 2,
+            y: canvas.height - 60,
+            size: 80,
+            speed: 5
+        };
+
+        let sheepList = Array.from({ length: 5 }, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height / 2,
+            size: 50,
+            dx: (Math.random() * 4 + 1) * (Math.random() > 0.5 ? 1 : -1),
+            dy: (Math.random() * 4 + 1) * (Math.random() > 0.5 ? 1 : -1)
+        }));
+
+        let score = 0;
+
+        // Controls
+        let keys = {};
+        window.addEventListener("keydown", (e) => {
+            keys[e.key] = true;
+            e.preventDefault();
+        });
+        window.addEventListener("keyup", (e) => {
+            keys[e.key] = false;
+            e.preventDefault();
+        });
+
+        // Mobile button controls
+        const touchControls = {
+            left: false,
+            right: false,
+            up: false,
+            down: false
+        };
+
+        function handleTouchStart(direction) {
+            touchControls[direction] = true;
+        }
+
+        function handleTouchEnd(direction) {
+            touchControls[direction] = false;
+        }
+
+        function updateTouchControls() {
+            if (touchControls.left) player.x = Math.max(0, player.x - player.speed);
+            if (touchControls.right) player.x = Math.min(canvas.width - player.size, player.x + player.speed);
+            if (touchControls.up) player.y = Math.max(0, player.y - player.speed);
+            if (touchControls.down) player.y = Math.min(canvas.height - player.size, player.y + player.speed);
+        }
+
+        ["left", "right", "up", "down"].forEach(direction => {
+            const button = document.getElementById(direction);
+            button.addEventListener("mousedown", () => handleTouchStart(direction));
+            button.addEventListener("mouseup", () => handleTouchEnd(direction));
+            button.addEventListener("touchstart", (e) => {
+                e.preventDefault();
+                handleTouchStart(direction);
+            });
+            button.addEventListener("touchend", (e) => {
+                e.preventDefault();
+                handleTouchEnd(direction);
+            });
+        });
+
+        // Prevent touch events from scrolling the screen
+        document.addEventListener("touchmove", (e) => e.preventDefault(), { passive: false });
+
+        function movePlayer() {
+            if (keys["ArrowUp"] || keys["w"] || touchControls.up) player.y = Math.max(0, player.y - player.speed);
+            if (keys["ArrowDown"] || keys["s"] || touchControls.down) player.y = Math.min(canvas.height - player.size, player.y + player.speed);
+            if (keys["ArrowLeft"] || keys["a"] || touchControls.left) player.x = Math.max(0, player.x - player.speed);
+            if (keys["ArrowRight"] || keys["d"] || touchControls.right) player.x = Math.min(canvas.width - player.size, player.x + player.speed);
+        }
+
+        // Update game objects
+        function update() {
+            movePlayer();
+            updateTouchControls();
+
+            // Update sheep positions
+            sheepList.forEach(sheep => {
+                sheep.x += sheep.dx;
+                sheep.y += sheep.dy;
+
+                // Bounce sheep off walls
+                if (sheep.x < 0 || sheep.x > canvas.width - sheep.size) sheep.dx *= -1;
+                if (sheep.y < 0 || sheep.y > canvas.height - sheep.size) sheep.dy *= -1;
+
+                // Check collision
+                if (Math.hypot(player.x - sheep.x, player.y - sheep.y) < player.size) {
+                    score++;
+                    document.getElementById("score").textContent = `Score: ${score}`;
+                    resetSheep(sheep);
+                }
+            });
+        }
+
+        // Draw game objects
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw background
+            ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
+
+            // Draw player
+            ctx.drawImage(playerImg, player.x, player.y, player.size, player.size);
+
+            // Draw sheep
+            sheepList.forEach(sheep => {
+                ctx.drawImage(sheepImg, sheep.x, sheep.y, sheep.size, sheep.size);
+            });
+        }
+
+        // Reset sheep position
+        function resetSheep(sheep) {
+            sheep.x = Math.random() * canvas.width;
+            sheep.y = Math.random() * canvas.height / 2;
+            sheep.dx = (Math.random() * 4 + 1) * (Math.random() > 0.5 ? 1 : -1);
+            sheep.dy = (Math.random() * 4 + 1) * (Math.random() > 0.5 ? 1 : -1);
+        }
+
+        // Main game loop
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Start the game
+        gameLoop();
+    </script>
+</body>
+</html>
+<div class="soon">Игра про жизнь кадырова</div>
+
+
+
+
+</body>
+</html>
